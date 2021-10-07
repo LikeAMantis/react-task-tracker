@@ -29,7 +29,7 @@ const AddTask = ({addTask}) => {
                     placeholder="Add Task"
                 ></input>
                 <div>
-                    <button onClick={onClick}>Save</button>
+                    <button className="save-btn" onClick={onClick}>Save</button>
                     <button onClick={() => setEdit(false)}>Cancel</button>
                 </div>
             </div>

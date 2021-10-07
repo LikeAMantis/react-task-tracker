@@ -9,11 +9,11 @@
       "id": 2
     },
     {
-      "name": "Crocery",
+      "name": "test",
       "id": 3
     },
     {
-      "name": "New Category",
+      "name": "Test",
       "id": 4
     }
   ],
@@ -21,19 +21,19 @@
     {
       "tasksCategorieId": 1,
       "text": "Math",
-      "done": true,
+      "done": false,
       "id": 1
     },
     {
       "tasksCategorieId": 1,
       "text": "German",
-      "done": true,
+      "done": false,
       "id": 2
     },
     {
       "tasksCategorieId": 1,
       "text": "English",
-      "done": true,
+      "done": false,
       "id": 3
     },
     {
@@ -50,33 +50,21 @@
     },
     {
       "tasksCategorieId": 3,
-      "text": "Car Washingf",
-      "done": true,
+      "text": "sdf",
+      "done": false,
+      "id": 7
+    },
+    {
+      "tasksCategorieId": 3,
+      "text": "fff",
+      "done": false,
+      "id": 8
+    },
+    {
+      "tasksCategorieId": 4,
+      "text": "Bla",
+      "done": false,
       "id": 9
-    },
-    {
-      "tasksCategorieId": 4,
-      "text": "Fuck you",
-      "done": false,
-      "id": 11
-    },
-    {
-      "tasksCategorieId": 4,
-      "text": "Cunt",
-      "done": false,
-      "id": 12
-    },
-    {
-      "tasksCategorieId": 4,
-      "text": "Joke",
-      "done": true,
-      "id": 13
-    },
-    {
-      "tasksCategorieId": 4,
-      "text": "b",
-      "done": true,
-      "id": 16
     }
   ]
 }

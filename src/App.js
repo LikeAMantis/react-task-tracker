@@ -2,8 +2,32 @@ import Tasks from './Components/Tasks';
 import { useState, useEffect } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
 
+import {
+  DndContext, 
+  closestCenter,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core';
+
+import {
+arrayMove,
+SortableContext,
+sortableKeyboardCoordinates,
+verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+
+
 function App() {
   const [tasksCategories, setTasksCategories] = useState([]);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
 
   useEffect(() => {
     const fetchtasksCategories = async () => {
@@ -37,17 +61,37 @@ function App() {
   }
   
 
+  // function handleDragEnd(event) {
+  //   const {active, over} = event;
+    
+  //   if (active.id !== over.id) {
+  //     setTasks((items) => {
+  //       const oldIndex = items.indexOf(active.id);
+  //       const newIndex = items.indexOf(over.id);
+        
+  //       return arrayMove(items, oldIndex, newIndex);
+  //     });
+  //   }
+  // }
 
   function drawTasksCategories() {
-    return tasksCategories.map((tasksCategorie, index) => 
-      <Tasks 
-        key={`taskContainer-${index}`} 
-        tasksCategorie={tasksCategorie} 
-        deleteCategory={deleteCategory} 
-        editCategoryName={editCategoryName}
-        isLast={(index + 1) === tasksCategories.length}
-      />
-    );
+    return (
+      <DndContext 
+        sensors={sensors}
+        collisionDetection={closestCenter}
+        // onDragEnd={handleDragEnd}
+      >
+      { tasksCategories.map((tasksCategorie, index) => 
+        <Tasks 
+          key={`taskContainer-${index}`} 
+          tasksCategorie={tasksCategorie} 
+          deleteCategory={deleteCategory} 
+          editCategoryName={editCategoryName}
+          isLast={(index + 1) === tasksCategories.length}
+        />
+      )}
+      </DndContext>
+    )
   }
 
   async function editCategoryName(id, newName) {

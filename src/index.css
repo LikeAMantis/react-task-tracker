@@ -29,6 +29,19 @@ button {
   margin-right: 2px;
 }
 
+.btnContainer {
+  position: relative;
+}
+
+.del-btn {
+  position: absolute;
+  right: 0px;
+}
+
+.save-btn {
+  color: green;
+}
+
 button:hover {
   filter: brightness(1.2);
 }

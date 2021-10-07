@@ -1,18 +1,49 @@
 import { useState, useEffect } from 'react';
-import { SortableContainer, SortableElement, SortableHandle } from 'react-sortable-hoc';
-import { arrayMoveImmutable } from 'array-move';
 
 import React from 'react';
-import Task from './Task';
 import Add from './AddTask';
+import Task from './Task';
 
+import {
+    DndContext, 
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+} from '@dnd-kit/core';
+
+import {
+arrayMove,
+SortableContext,
+sortableKeyboardCoordinates,
+verticalListSortingStrategy,
+} from '@dnd-kit/sortable';
+  
 
 
 const Tasks = ({tasksCategorie, deleteCategory, editCategoryName, isLast}) => {
     const [tasks, setTasks] = useState([]);
-    const [isSortable, setIsSortable] = useState(false);
     const [edit, setEdit] = useState(isLast);
     const [name, setName] = useState(tasksCategorie.name);
+
+
+  
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     useEffect(() => {
         async function fetchTasks() {
@@ -71,16 +102,17 @@ const Tasks = ({tasksCategorie, deleteCategory, editCategoryName, isLast}) => {
     // Sortable
 
     function drawTasks() {
-        return  tasks.map((task, index) => <><Handle /><SortableItem key={`task-${index}`} index={index} taskData={task} toggleTask={toggleTask} deleteTask={deleteTask}/></>);
+        return  (
+            <SortableContext 
+                items={tasks}
+                strategy={verticalListSortingStrategy}
+                // key={tasksCategorie.id} 
+                // id={tasksCategorie.id}
+            >
+            {tasks.map((task) => <Task key={"Task-" + task.id} id={task.id} taskData={task} toggleTask={toggleTask} deleteTask={deleteTask}/>)}
+        </SortableContext>
+      );
     }
-
-    const SortableList = SortableContainer(drawTasks);
-    
-    const onSortEnd = ({oldIndex, newIndex}) => {
-        setTasks(arrayMoveImmutable(tasks, oldIndex, newIndex));
-    };
-
-    const attributes = isSortable ? {sortable: ""} : {};
 
 
     // Edit
@@ -106,10 +138,13 @@ const Tasks = ({tasksCategorie, deleteCategory, editCategoryName, isLast}) => {
         return(
             <div>
                 <input ref={input => input && input.focus()} placeholder="New Category" onKeyDown={e => onKeyDown(e)} onChange={(e) => setName(e.target.value)} value={name} style={{height: "1.5em", width: "100%"}}></input>
-                <div>
-                    <button onClick={() => {name.length === 0 ? alert("Enter a Name!") : saveCategory()}}>Save</button>
+                <div className="btnContainer">
+                    <button 
+                        className="save-btn"
+                        onClick={() => {name.length === 0 ? alert("Enter a Name!") : saveCategory()}}
+                    >Save</button>
                     <button onClick={() => name.length === 0 ? alert("Enter a Name!") : setEdit(false)}>Cancel</button>
-                    <button onClick={() => {deleteCategory(tasksCategorie.id); setEdit(false);}}>Delete</button>
+                    <button className="del-btn" onClick={() => {deleteCategory(tasksCategorie.id); setEdit(false);}}>Delete</button>
                 </div>
             </div>
         )
@@ -118,9 +153,8 @@ const Tasks = ({tasksCategorie, deleteCategory, editCategoryName, isLast}) => {
     return (
         <div className="CategoryWrapper" style={{width: "250px", height: "fit-content", padding: "18px", background: "#edebeb", borderRadius: "9px"}}>
             { !edit ? <h2 className="CategoryTitle" onClick={() => setEdit(true)}> {tasksCategorie.name}</h2> : drawCategoryEdit() }
-            <div className="Tasks" {...attributes}>{ (tasks.length > 0) ? <SortableList items={tasks} onSortEnd={onSortEnd} lockAxis="y" useDragHandle={true}/> : <p style={{fontSize: "12pt", textAlign: "center"}}>No Tasks added yet!</p> }</div>
+            <div className="Tasks" >{ (tasks.length > 0) ? drawTasks() : <p style={{fontSize: "12pt", textAlign: "center"}}>No Tasks added yet!</p> }</div>
             <Add addTask={addTask}/>
-            <button onClick={() => setIsSortable(!isSortable)}>{ isSortable ? "Finish Sort" : "Sort" }</button>
         </div>
     )
 }
