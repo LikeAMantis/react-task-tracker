@@ -1,13 +1,158 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+
+h1, h2 {
+  font-family: 'Inter', helvetica;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+h1 {
+  text-align: center;
+}
+
+hr {
+  margin-top: 30px;
+}
+
+body {
+  font-family: helvetica, sans-serif;
+}
+
+input {
+  background: #ffffff00
+}
+
+button {
+  background-color: black;
+  color: white;
+  padding: 1px 17px;
+  margin-top: 5px;
+  margin-right: 2px;
+}
+
+button:hover {
+  filter: brightness(1.2);
+}
+
+
+
+.flexContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 25px;
+  gap: 30px;
+}
+
+.categoryWrapper {
+  width: 250px;
+  padding: 18px;
+  background: #edebeb;
+  border-radius: 9px;
+}
+
+
+
+
+.task {
+  display: block;
+  background-color: rgb(48, 47, 47);
+  color: white;
+  border: black solid 1px;
+  padding: 2px 0;
+  margin-top: 0;
+  text-align: center;
+}
+
+.taskContainer {
+  position: relative;
+}
+
+#addCategory {
+  text-align: center;
+  font-size: 17pt;
+}
+
+#addTask {
+  font-size: 14pt;
+}
+
+#addTask svg {
+  transform: scale(1.2);
+  
+}
+
+#addCategory svg, #addTask svg {
+  vertical-align: text-top;
+  margin-right: 5px;
+}
+
+#addCategory:hover, #addTask:hover {
+  color: green;
+  cursor: pointer;
+}
+
+
+
+
+.Tasks {
+  border: 1px solid black;
+  margin: 15px 0;
+  cursor: default;
+
+}
+
+.Tasks[sortable] {
+  cursor: grab;
+}
+
+.Tasks[sortable] .taskContainer::before {
+  content: ":::";
+  position: absolute;
+  left: 5px;
+  color: white;
+}
+
+.Tasks .taskContainer:hover {
+  filter: brightness(1.2);
+}
+
+
+
+
+.del-icon {
+  display: none;
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: red;
+  cursor: pointer;
+}
+
+.category-del-icon {
+  display: none;
+}
+
+.CategoryTitle {
+  padding: 3px;
+  margin-top: 0;
+}
+
+.CategoryTitle:hover {
+  background: #f7f7f7;
+  border-radius: 10px;
+}
+
+
+.CategoryTitle:hover .category-del-icon {
+  display: inline;
+  margin-left: 7px;
+  width: 13px;
+  color: red;
+  vertical-align: text-top;
+}
+
+
+.Tasks:not([sortable]) .taskContainer:hover > .del-icon{
+  display: block;
 }

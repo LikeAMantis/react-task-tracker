@@ -1,0 +1,82 @@
+{
+  "tasksCategories": [
+    {
+      "name": "School",
+      "id": 1
+    },
+    {
+      "name": "Work",
+      "id": 2
+    },
+    {
+      "name": "Crocery",
+      "id": 3
+    },
+    {
+      "name": "New Category",
+      "id": 4
+    }
+  ],
+  "tasks": [
+    {
+      "tasksCategorieId": 1,
+      "text": "Math",
+      "done": true,
+      "id": 1
+    },
+    {
+      "tasksCategorieId": 1,
+      "text": "German",
+      "done": true,
+      "id": 2
+    },
+    {
+      "tasksCategorieId": 1,
+      "text": "English",
+      "done": true,
+      "id": 3
+    },
+    {
+      "tasksCategorieId": 2,
+      "text": "Bla",
+      "done": true,
+      "id": 5
+    },
+    {
+      "tasksCategorieId": 2,
+      "text": "Test",
+      "done": true,
+      "id": 6
+    },
+    {
+      "tasksCategorieId": 3,
+      "text": "Car Washingf",
+      "done": true,
+      "id": 9
+    },
+    {
+      "tasksCategorieId": 4,
+      "text": "Fuck you",
+      "done": false,
+      "id": 11
+    },
+    {
+      "tasksCategorieId": 4,
+      "text": "Cunt",
+      "done": false,
+      "id": 12
+    },
+    {
+      "tasksCategorieId": 4,
+      "text": "Joke",
+      "done": true,
+      "id": 13
+    },
+    {
+      "tasksCategorieId": 4,
+      "text": "b",
+      "done": true,
+      "id": 16
+    }
+  ]
+}
