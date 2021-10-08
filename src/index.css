@@ -29,6 +29,10 @@ button {
   margin-right: 2px;
 }
 
+button:focus {
+  border: white solid 2px;
+}
+
 .btnContainer {
   position: relative;
 }
@@ -68,10 +72,11 @@ button:hover {
 
 .task {
   display: block;
-  background-color: rgb(48, 47, 47);
+  background-color: rgb(104 104 104);
   color: white;
   border: black solid 1px;
-  padding: 2px 0;
+  padding: 4px 0px;
+  font-size: 10pt;
   margin-top: 0;
   text-align: center;
 }

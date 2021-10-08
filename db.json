@@ -15,6 +15,10 @@
     {
       "name": "Test",
       "id": 4
+    },
+    {
+      "name": "Test",
+      "id": 5
     }
   ],
   "tasks": [
@@ -65,6 +69,24 @@
       "text": "Bla",
       "done": false,
       "id": 9
+    },
+    {
+      "tasksCategorieId": 1,
+      "text": "-lorem12",
+      "done": false,
+      "id": 10
+    },
+    {
+      "tasksCategorieId": 5,
+      "text": "test",
+      "done": false,
+      "id": 11
+    },
+    {
+      "tasksCategorieId": 5,
+      "text": "Test",
+      "done": false,
+      "id": 12
     }
   ]
 }

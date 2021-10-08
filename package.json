@@ -2,6 +2,7 @@
   "name": "react-task-tracker",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://likeamantis.github.io/react-task-tracker/",
   "dependencies": {
     "@dnd-kit/core": "^4.0.0",
     "@dnd-kit/sortable": "^5.0.0",
@@ -20,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch db.json --port 5000"
+    "server": "json-server --watch db.json --port 5000",
+    "pages": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
   }
 }

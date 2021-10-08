@@ -153,7 +153,7 @@ const Tasks = ({tasksCategorie, deleteCategory, editCategoryName, isLast}) => {
     return (
         <div className="CategoryWrapper" style={{width: "250px", height: "fit-content", padding: "18px", background: "#edebeb", borderRadius: "9px"}}>
             { !edit ? <h2 className="CategoryTitle" onClick={() => setEdit(true)}> {tasksCategorie.name}</h2> : drawCategoryEdit() }
-            <div className="Tasks" >{ (tasks.length > 0) ? drawTasks() : <p style={{fontSize: "12pt", textAlign: "center"}}>No Tasks added yet!</p> }</div>
+            <div className="Tasks" >{ (tasks.length > 0) ? drawTasks() : <p style={{fontSize: "12pt", textAlign: "center", color: "grey"}}>Tasks</p> }</div>
             <Add addTask={addTask}/>
         </div>
     )
