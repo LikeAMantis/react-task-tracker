@@ -5,35 +5,15 @@
       "id": 1
     },
     {
-      "name": "Work",
-      "id": 2
-    },
-    {
-      "name": "test",
-      "id": 3
-    },
-    {
-      "name": "Test",
+      "name": "Private",
       "id": 4
     },
     {
-      "name": "Test",
-      "id": 5
+      "name": "Work",
+      "id": 2
     }
   ],
   "tasks": [
-    {
-      "tasksCategorieId": 1,
-      "text": "Math",
-      "done": false,
-      "id": 1
-    },
-    {
-      "tasksCategorieId": 1,
-      "text": "German",
-      "done": false,
-      "id": 2
-    },
     {
       "tasksCategorieId": 1,
       "text": "English",
@@ -42,51 +22,51 @@
     },
     {
       "tasksCategorieId": 2,
-      "text": "Bla",
-      "done": true,
-      "id": 5
-    },
-    {
-      "tasksCategorieId": 2,
-      "text": "Test",
-      "done": true,
-      "id": 6
-    },
-    {
-      "tasksCategorieId": 3,
-      "text": "sdf",
+      "text": "Finish Project",
       "done": false,
-      "id": 7
-    },
-    {
-      "tasksCategorieId": 3,
-      "text": "fff",
-      "done": false,
-      "id": 8
+      "id": 17
     },
     {
       "tasksCategorieId": 4,
-      "text": "Bla",
+      "text": "Go for a walk",
       "done": false,
-      "id": 9
+      "id": 21
+    },
+    {
+      "tasksCategorieId": 2,
+      "text": "test hallo",
+      "done": false,
+      "id": 22
     },
     {
       "tasksCategorieId": 1,
-      "text": "-lorem12",
+      "text": "Math",
       "done": false,
-      "id": 10
+      "id": 23
     },
     {
-      "tasksCategorieId": 5,
-      "text": "test",
+      "tasksCategorieId": 1,
       "done": false,
-      "id": 11
+      "text": "Pyhsics",
+      "id": 24
     },
     {
-      "tasksCategorieId": 5,
-      "text": "Test",
+      "tasksCategorieId": 4,
       "done": false,
-      "id": 12
+      "text": "Meet with Hannah",
+      "id": 25
+    },
+    {
+      "tasksCategorieId": 4,
+      "done": false,
+      "text": "Gym Workout",
+      "id": 26
+    },
+    {
+      "tasksCategorieId": 4,
+      "done": false,
+      "text": "Read ",
+      "id": 27
     }
   ]
 }

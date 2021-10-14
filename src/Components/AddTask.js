@@ -1,16 +1,10 @@
-import { useState, useEffect } from "react";
-import { IoAddCircleSharp } from "react-icons/io5"
+import { useState } from "react";
+import { TiPlus } from "react-icons/ti"
 
 
 const AddTask = ({addTask}) => {
     const [value, setValue] = useState("");
     const [edit, setEdit] = useState(false);
-
-    // useEffect(() => {
-    //     if(edit) {
-    //         this.refs.taskInput.focus();
-    //     }
-    // }, [edit])
 
     function onClick() {
         addTask(value);
@@ -18,12 +12,15 @@ const AddTask = ({addTask}) => {
         setEdit(false);
     }
 
+
+
+    
     function drawEdit() {
         return(
             <div>
                 <input 
                     ref={input => input && input.focus()} 
-                    onKeyDown={(e) => e.code==="Enter" && onClick()} 
+                    onKeyDown={(e) => onKeyDown(e)} 
                     onChange={(e) => {setValue(e.target.value)}} 
                     value={value}
                     placeholder="Add Task"
@@ -37,13 +34,21 @@ const AddTask = ({addTask}) => {
     }
 
     function drawAddTask() {
-        return <><IoAddCircleSharp /><span onClick={() => setEdit(true)}>Add Task</span></>
+        return <div id="addTask" onClick={() => setEdit(true)}><TiPlus /><span>Add Task</span></div>
+    }
+
+    function onKeyDown(e) {
+        if (e.code==="Enter") {
+            onClick();
+            setEdit(false);
+        }
+        else if (e.code==="Escape") {
+            setEdit(false);
+        }
     }
 
     return (
-        <div id="addTask">
-            {!edit ? drawAddTask() : drawEdit() }
-        </div>
+        <>{!edit ? drawAddTask() : drawEdit() }</>
     )
 }
 

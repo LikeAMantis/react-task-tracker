@@ -21,12 +21,17 @@ input {
   background: #ffffff00
 }
 
+.taskContainer svg {
+  font-size: 10pt;
+}
+
 button {
   background-color: black;
   color: white;
   padding: 1px 17px;
   margin-top: 5px;
   margin-right: 2px;
+  border-radius: 5px;
 }
 
 button:focus {
@@ -61,42 +66,69 @@ button:hover {
 }
 
 .categoryWrapper {
-  width: 250px;
-  padding: 18px;
-  background: #edebeb;
+  position: relative;
+  padding: 20px;
+  padding-top: 30px;
+  padding-left: 30px;
+  background: rgb(243 243 243);
   border-radius: 9px;
+  height: fit-content;
 }
 
-
-
+.categoryWrapper > .dragHandle {
+  display: block;
+  left: 8px;
+  top: 8px;
+}
 
 .task {
-  display: block;
-  background-color: rgb(104 104 104);
+  display: inline-block;
   color: white;
-  border: black solid 1px;
-  padding: 4px 0px;
+  padding: 8px 0px;
   font-size: 10pt;
   margin-top: 0;
-  text-align: center;
+  width: 230px;
+  margin-left: 45px;
+  border: 0;
+  cursor: default;
+}
+
+.task:focus-visible {
+  outline: 0;
 }
 
 .taskContainer {
   position: relative;
+  background-color: rgb(82 82 82);
 }
+
+.dragHandle {
+  display: none;
+  position: absolute;
+  cursor: grab;
+}
+
+.taskContainer > .dragHandle {
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+
+
+
 
 #addCategory {
   text-align: center;
-  font-size: 17pt;
+  font-size: 18pt;
 }
 
 #addTask {
-  font-size: 14pt;
+  font-size: 12pt;
 }
 
 #addTask svg {
-  transform: scale(1.2);
-  
+  font-size: 1.2em;
 }
 
 #addCategory svg, #addTask svg {
@@ -110,27 +142,45 @@ button:hover {
 }
 
 
+.checkbox {
+  display: inline-block;
+  position: absolute;
+  width: 0.6em;
+  height: 0.6em;
+  border: 3px solid black;
+  border-radius: 5px;
+  top: 50%;
+  left: 23px;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
 
+.checkbox svg {
+  position: absolute;
+  font-size: 11pt;
+  stroke-width: 2px;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+}
 
-.Tasks {
+.tasks {
   border: 1px solid black;
   margin: 15px 0;
   cursor: default;
-
+  background: rgb(82 82 82);
 }
 
-.Tasks[sortable] {
-  cursor: grab;
+.tasks p {
+ text-align: center;
+ color: grey;
+ width: 256px;
+ margin: 0;
+ font-size: 10pt;
+ padding: 7px 0;
 }
 
-.Tasks[sortable] .taskContainer::before {
-  content: ":::";
-  position: absolute;
-  left: 5px;
-  color: white;
-}
-
-.Tasks .taskContainer:hover {
+.tasks .taskContainer:hover {
   filter: brightness(1.2);
 }
 
@@ -151,18 +201,18 @@ button:hover {
   display: none;
 }
 
-.CategoryTitle {
+.categoryTitle {
   padding: 3px;
   margin-top: 0;
 }
 
-.CategoryTitle:hover {
-  background: #f7f7f7;
+.categoryTitle:hover {
+  background: #e7e7e7;
   border-radius: 10px;
 }
 
 
-.CategoryTitle:hover .category-del-icon {
+.categoryTitle:hover .category-del-icon {
   display: inline;
   margin-left: 7px;
   width: 13px;
@@ -171,6 +221,7 @@ button:hover {
 }
 
 
-.Tasks:not([sortable]) .taskContainer:hover > .del-icon{
+.taskContainer:hover > .del-icon, 
+.taskContainer:hover > .dragHandle {
   display: block;
 }
