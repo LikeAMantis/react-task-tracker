@@ -4,10 +4,10 @@ import { GrDrag } from "react-icons/gr"
 import { BsCheck } from "react-icons/bs"
 
 
-const Task = forwardRef(({taskData, deleteTask, putTask, attributes, listeners, style}, ref) => {
+const Task = forwardRef(({taskData, onDelete, onEdit, attributes, listeners, style}, ref) => {
     const [value, setValue] = useState(taskData.text);
 
-    function onKeyDown(e) {
+    function handleKeyDown(e) {
         if (e.code === "Enter" || e.code === "Escape") {
             e.target.blur();
         }
@@ -16,9 +16,10 @@ const Task = forwardRef(({taskData, deleteTask, putTask, attributes, listeners, 
     return (
         <div className="taskContainer" ref={ref} style={style}>
             <GrDrag className="dragHandle" {...listeners} {...attributes}></GrDrag>
-            <div className="checkbox" 
-                onClick={() => putTask({...taskData, done: !taskData.done})} 
-                >
+            <div 
+                className="checkbox" 
+                onClick={() => onEdit({...taskData, done: !taskData.done})} 
+            >
                 { taskData.done && <BsCheck/>}
             </div>
             <input 
@@ -26,14 +27,14 @@ const Task = forwardRef(({taskData, deleteTask, putTask, attributes, listeners, 
                 style={taskData.done ? {textDecorationLine: 'line-through', color: "grey"} : null}
                 value={value}
                 onChange={(e) => setValue(e.target.value)}
-                onBlur={() => putTask({...taskData, text: value})}
-                onKeyDown={(e) => onKeyDown(e)}
-                >
+                onBlur={() => onEdit({...taskData, text: value})}
+                onKeyDown={(e) => handleKeyDown(e)}
+            >
             </input>
             <FaTimes 
                 className="del-icon" 
-                onClick={(e) => {e.stopPropagation(); deleteTask(taskData.id); console.log("deleteTask");}}
-                />
+                onClick={(e) => {e.stopPropagation(); onDelete(taskData.id); console.log("deleteTask");}}
+            />
         </div>
     )
 });

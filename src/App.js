@@ -30,13 +30,13 @@ function App() {
   );
 
   useEffect(() => {
-    const fetchtasksCategories = async () => {
-      var res =  await fetch("http://localhost:5000/tasksCategories");
+    const fetchData = async () => {
+      var res =  await fetch("http://localhost:5000/db");
       var data = await res.json();
 
-      setTasksCategories(data);
+      setTasksCategories(data["tasksCategories"]);
     }
-    fetchtasksCategories();
+    fetchData();
   }, []);
 
 
@@ -77,8 +77,6 @@ function App() {
 
 
 
-  // Sortable
-
   function drawTasksCategories() {
     return (
       <>
@@ -86,19 +84,20 @@ function App() {
         sensors={sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
-        >
+      >
         <SortableContext 
           items={tasksCategories}
-          > 
-          { tasksCategories.map((tasksCategorie) => 
+        > 
+          { tasksCategories.map((tasksCategorie) => (
             <Tasks 
               key={`Categorie-${tasksCategorie.id}`} 
-              tasksCategorie={tasksCategorie} 
-              deleteCategory={deleteCategory} 
-              editCategoryName={editCategoryName}
-              categoryAdded={categoryAdded}
+              tasksCategorie={tasksCategorie}
+            //   tasks={data.tasks.filter((task) => task.tasksCategorieId === tasksCategorie.id)} 
+              onDelete={deleteCategory}
+              onEdit={editCategoryName} 
+              isAdded={categoryAdded}
             />
-          )}
+          ))}
         </SortableContext>
       </DndContext>
       </>
@@ -117,10 +116,13 @@ function App() {
   
   return (
     <div className="App">
-      <h1>Tasks Tracker</h1>
-      <div className="flexContainer">{tasksCategories.length > 0 ? drawTasksCategories() : "No Categories added yet!"}</div>
-      <hr size="1" width="90%" color="black"></hr>
-      <div id="addCategory" onClick={() => {addCategory(); setCategoryAdded(true)}} ><IoAddCircleOutline />Add Category</div>
+        <h1>Tasks Tracker</h1>
+        <div className="flexContainer">{tasksCategories.length > 0 ? drawTasksCategories() : "No Categories added yet!"}</div>
+        <hr size="1" width="90%" color="black"></hr>
+        <div id="addCategory" onClick={() => {addCategory(); setCategoryAdded(true)}}>
+            <IoAddCircleOutline />
+            <span>Category</span> 
+        </div>
     </div>
   );
 }

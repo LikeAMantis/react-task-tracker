@@ -2,25 +2,22 @@ import { useState } from "react";
 import { TiPlus } from "react-icons/ti"
 
 
-const AddTask = ({addTask}) => {
+const AddTask = ({ onAdd }) => {
     const [value, setValue] = useState("");
     const [edit, setEdit] = useState(false);
 
     function onClick() {
-        addTask(value);
+        onAdd(value);
         setValue("");
         setEdit(false);
     }
 
-
-
-    
     function drawEdit() {
         return(
             <div>
                 <input 
                     ref={input => input && input.focus()} 
-                    onKeyDown={(e) => onKeyDown(e)} 
+                    onKeyDown={(e) => handleKeyDown(e)} 
                     onChange={(e) => {setValue(e.target.value)}} 
                     value={value}
                     placeholder="Add Task"
@@ -34,10 +31,14 @@ const AddTask = ({addTask}) => {
     }
 
     function drawAddTask() {
-        return <div id="addTask" onClick={() => setEdit(true)}><TiPlus /><span>Add Task</span></div>
+        return ( 
+            <div id="addTask" onClick={() => setEdit(true)}>
+                <TiPlus /><span>Add Task</span>
+            </div>
+        )
     }
 
-    function onKeyDown(e) {
+    function handleKeyDown(e) {
         if (e.code==="Enter") {
             onClick();
             setEdit(false);

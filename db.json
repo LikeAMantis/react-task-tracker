@@ -1,7 +1,7 @@
 {
   "tasksCategories": [
     {
-      "name": "School",
+      "name": "School sdf",
       "id": 1
     },
     {
@@ -29,7 +29,7 @@
     {
       "tasksCategorieId": 4,
       "text": "Go for a walk",
-      "done": false,
+      "done": true,
       "id": 21
     },
     {
@@ -41,7 +41,7 @@
     {
       "tasksCategorieId": 1,
       "text": "Math",
-      "done": false,
+      "done": true,
       "id": 23
     },
     {
@@ -55,12 +55,6 @@
       "done": false,
       "text": "Meet with Hannah",
       "id": 25
-    },
-    {
-      "tasksCategorieId": 4,
-      "done": false,
-      "text": "Gym Workout",
-      "id": 26
     },
     {
       "tasksCategorieId": 4,

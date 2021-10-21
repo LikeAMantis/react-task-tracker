@@ -18,7 +18,13 @@ const SortableTask = (props) => {
     };
 
     return (
-        <Task ref={setNodeRef} {...props} style={props.isDragged ? {...style, background: "lightgrey"} : style} attributes={attributes} listeners={listeners}/>
+        <Task 
+            ref={setNodeRef} 
+            {...props} 
+            style={props.isDragged ? {...style, background: "lightgrey"} : style} 
+            attributes={attributes} 
+            listeners={listeners}
+        />
     )
 }
 
