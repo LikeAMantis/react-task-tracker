@@ -1,66 +1,113 @@
 {
   "tasksCategories": [
     {
-      "name": "School sdf",
-      "id": 1
+      "name": "Hello",
+      "color": "purple",
+      "id": 2
     },
     {
-      "name": "Private",
+      "name": "Red",
+      "color": "red",
+      "id": 3
+    },
+    {
+      "name": "Blue",
+      "color": "blue",
       "id": 4
     },
     {
-      "name": "Work",
-      "id": 2
+      "name": "Yellow",
+      "color": "orange",
+      "id": 5
+    },
+    {
+      "name": "Purple blas",
+      "color": "blue",
+      "id": 6
+    },
+    {
+      "name": "Teal",
+      "color": "teal",
+      "id": 7
+    },
+    {
+      "name": "Grey dfg",
+      "color": "grey",
+      "id": 8
     }
   ],
   "tasks": [
     {
-      "tasksCategorieId": 1,
-      "text": "English",
-      "done": false,
+      "tasksCategorieId": 2,
+      "done": true,
+      "text": "Test",
+      "id": 1
+    },
+    {
+      "tasksCategorieId": 2,
+      "done": true,
+      "text": "sDF",
+      "id": 2
+    },
+    {
+      "tasksCategorieId": 2,
+      "done": true,
+      "text": "sTsdfvfs",
       "id": 3
     },
     {
-      "tasksCategorieId": 2,
-      "text": "Finish Project",
-      "done": false,
-      "id": 17
-    },
-    {
-      "tasksCategorieId": 4,
-      "text": "Go for a walk",
+      "tasksCategorieId": 5,
       "done": true,
-      "id": 21
+      "text": "-est vory Et Plok cak schengos in Greek trenzur IdfoBraid, tgu deserunt pheeir wankeing dagarm sdf lkidad. dereud naar gosi trenz et",
+      "id": 4
     },
     {
-      "tasksCategorieId": 2,
-      "text": "test hallo",
-      "done": false,
-      "id": 22
-    },
-    {
-      "tasksCategorieId": 1,
-      "text": "Math",
+      "tasksCategorieId": 4,
       "done": true,
-      "id": 23
+      "text": "dfg",
+      "id": 5
     },
     {
-      "tasksCategorieId": 1,
-      "done": false,
-      "text": "Pyhsics",
-      "id": 24
+      "tasksCategorieId": 3,
+      "done": true,
+      "text": "dfg",
+      "id": 6
+    },
+    {
+      "tasksCategorieId": 6,
+      "done": true,
+      "text": "dfg",
+      "id": 7
+    },
+    {
+      "tasksCategorieId": 8,
+      "done": true,
+      "text": "dfg",
+      "id": 9
+    },
+    {
+      "tasksCategorieId": 7,
+      "done": true,
+      "text": "dfg",
+      "id": 10
     },
     {
       "tasksCategorieId": 4,
-      "done": false,
-      "text": "Meet with Hannah",
-      "id": 25
+      "done": true,
+      "text": "Test",
+      "id": 12
+    },
+    {
+      "tasksCategorieId": 5,
+      "done": true,
+      "text": "test sdlkf jlsdöfj sdjf lösdjflssdf",
+      "id": 13
     },
     {
       "tasksCategorieId": 4,
-      "done": false,
-      "text": "Read ",
-      "id": 27
+      "done": true,
+      "text": "Test",
+      "id": 14
     }
   ]
 }

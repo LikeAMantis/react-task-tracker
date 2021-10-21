@@ -4,12 +4,12 @@ import { TiPlus } from "react-icons/ti"
 
 const AddTask = ({ onAdd }) => {
     const [value, setValue] = useState("");
-    const [edit, setEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
 
     function onClick() {
         onAdd(value);
         setValue("");
-        setEdit(false);
+        setIsEdit(false);
     }
 
     function drawEdit() {
@@ -24,7 +24,7 @@ const AddTask = ({ onAdd }) => {
                 ></input>
                 <div>
                     <button className="save-btn" onClick={onClick}>Save</button>
-                    <button onClick={() => setEdit(false)}>Cancel</button>
+                    <button onClick={() => setIsEdit(false)}>Cancel</button>
                 </div>
             </div>
         )
@@ -32,7 +32,7 @@ const AddTask = ({ onAdd }) => {
 
     function drawAddTask() {
         return ( 
-            <div id="addTask" onClick={() => setEdit(true)}>
+            <div id="addTask" onClick={() => setIsEdit(true)}>
                 <TiPlus /><span>Add Task</span>
             </div>
         )
@@ -41,15 +41,15 @@ const AddTask = ({ onAdd }) => {
     function handleKeyDown(e) {
         if (e.code==="Enter") {
             onClick();
-            setEdit(false);
+            setIsEdit(false);
         }
         else if (e.code==="Escape") {
-            setEdit(false);
+            setIsEdit(false);
         }
     }
 
     return (
-        <>{!edit ? drawAddTask() : drawEdit() }</>
+        <>{!isEdit ? drawAddTask() : drawEdit() }</>
     )
 }
 

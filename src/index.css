@@ -1,5 +1,19 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
+@keyframes rotation {
+  0%   {transform: translate(-50%, -50%) rotate(0deg)}
+  100% {transform: translate(-50%, -50%) rotate(360deg)}
+}
+
+:root {
+  --grey: rgb(243, 243, 243);
+  --blue: #8ac7f9;
+  --red: #ff6060;
+  --orange: #fdc45a;
+  --purple: #cfa7cf;
+  --teal: #93bfbf;
+  --green: #92bf85;
+}
 
 h1, h2 {
   font-family: 'Inter', helvetica;
@@ -17,21 +31,80 @@ body {
   font-family: helvetica, sans-serif;
 }
 
-input {
-  background: #ffffff00
+input, textarea {
+  background: #ffffff00;
+  outline: none;
+  border: none;
+  resize: none;
+}
+
+button {
+  background-color: #ffffff30;
+  color: black;
+  padding: 1px 17px;
+  margin-right: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+
+/* Color Picker */
+.editCategory-container {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 12pt;
+}
+
+.editCategory-container > svg {
+  display: inline-block;
+  margin-left: 4px;
+  outline: none;
+}
+
+.colorPicker {
+  position: absolute;
+  left: 50%;
+  background: white;
+  border-radius: 4px;
+  z-index: 1;
+  white-space: nowrap;
+  padding: 2px 5px;
+}
+
+.colorPicker > div {
+  display: inline-block;
+  height: 30px; 
+  width: 30px; 
+  cursor: pointer; 
+  outline: none; 
+  border-radius: 4px; 
+  margin: 5px 2px;
+}
+
+
+
+.app  {
+  position: relative;
+}
+
+#loading-icon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  font-size: 40pt;
+  animation: rotation 1.4s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
 }
 
 .taskContainer svg {
   font-size: 10pt;
 }
 
-button {
-  background-color: black;
-  color: white;
-  padding: 1px 17px;
-  margin-top: 5px;
-  margin-right: 2px;
-  border-radius: 5px;
+.editCategory-container > svg:hover {
+  cursor: pointer;
+  color: gray;
 }
 
 button:focus {
@@ -40,11 +113,6 @@ button:focus {
 
 .btnContainer {
   position: relative;
-}
-
-.del-btn {
-  position: absolute;
-  right: 0px;
 }
 
 .save-btn {
@@ -62,7 +130,7 @@ button:hover {
   flex-wrap: wrap;
   justify-content: center;
   padding-top: 25px;
-  gap: 30px;
+  gap: 20px;
 }
 
 .categoryWrapper {
@@ -70,20 +138,21 @@ button:hover {
   padding: 20px;
   padding-top: 30px;
   padding-left: 30px;
-  background: rgb(243 243 243);
+  background: var(--grey);
   border-radius: 9px;
   height: fit-content;
+  transition: background 350ms ease-out;
 }
 
-.categoryWrapper > .dragHandle {
+.categoryWrapper .dragHandle {
   display: block;
-  left: 8px;
-  top: 8px;
+  left: 10px;
+  top: 10px;
 }
 
 .task {
   display: inline-block;
-  color: white;
+  color: black;
   padding: 8px 0px;
   font-size: 10pt;
   margin-top: 0;
@@ -99,13 +168,14 @@ button:hover {
 
 .taskContainer {
   position: relative;
-  background-color: rgb(82 82 82);
+  background: inherit;
 }
 
 .dragHandle {
   display: none;
   position: absolute;
   cursor: grab;
+  outline: none;
 }
 
 .taskContainer > .dragHandle {
@@ -136,7 +206,8 @@ button:hover {
   margin-right: 5px;
 }
 
-#addCategory:hover, #addTask:hover {
+#addCategory:hover, 
+#addTask:hover {
   color: green;
   cursor: pointer;
 }
@@ -165,10 +236,10 @@ button:hover {
 }
 
 .tasks {
-  border: 1px solid black;
-  margin: 15px 0;
+  border-top: 1px solid black;
   cursor: default;
-  background: rgb(82 82 82);
+  padding: 5px 0 15px 0;
+  background: inherit;
 }
 
 .tasks p {
@@ -184,30 +255,27 @@ button:hover {
   filter: brightness(1.2);
 }
 
-
-
-
-.del-icon {
+.taskContainer .del-icon {
   display: none;
   position: absolute;
   right: 12px;
   top: 50%;
   transform: translateY(-50%);
-  color: red;
+  color: black;
   cursor: pointer;
 }
 
-.category-del-icon {
-  display: none;
+svg.del-icon:hover {
+  color: red;
 }
 
 .categoryTitle {
   padding: 3px;
-  margin-top: 0;
+  margin: 0;
 }
 
 .categoryTitle:hover {
-  background: #e7e7e7;
+  background: #ffffff38;
   border-radius: 10px;
 }
 

@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { GrDrag } from "react-icons/gr";
-
-import React from 'react';
-import Add from './AddTask';
-import Task from './Task';
+import { HiColorSwatch } from  "react-icons/hi";
+import { FaTimes } from "react-icons/fa";
 import SortableTask from './SortableTask';
+
+import AddTask from './AddTask';
+import Task from './Task';
+import ColorPicker from './ColorPicker';
+
 
 // Sortable
 import {
@@ -25,13 +28,14 @@ import {
   } from '@dnd-kit/sortable';
   import { CSS } from '@dnd-kit/utilities';
 
-  
 
-const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
-    const [tasks, setTasks] = useState([]);
-    const [edit, setEdit] = useState(categoryAdded);
+const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) => {
+    const [tasks, setTasks] = useState(tasksData);
+    const [isEdit, setIsEdit] = useState(isAdded);
     const [name, setName] = useState(tasksCategorie.name);
-    
+    const nameBackup = useRef();
+    const [isColorPicker, setisColorPicker] = useState(false);
+
     const [activeId, setActiveId] = useState(null);
     const sensors = useSensors(
         useSensor(PointerSensor),
@@ -53,19 +57,12 @@ const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
         transition,
     };
 
-    useEffect(() => {
-        async function fetchTasks() {
-            var res =  await fetch(`http://localhost:5000/tasks?tasksCategorieId=${tasksCategorie.id}`);
-            var data = await res.json();
-    
-            setTasks(data);
-        }
-        fetchTasks();
-    }, [])
+
 
 
 
     
+
     async function addTask(text) {
         var data = await postTask({tasksCategorieId: tasksCategorie.id, done: false, text});
         setTasks([...tasks, data]);
@@ -107,9 +104,7 @@ const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
 
 
 
-
     // Edit
-
     function drawCategoryEdit() {
         return(
             <div>
@@ -124,12 +119,11 @@ const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
                 <div className="btnContainer">
                     <button 
                         className="save-btn"
-                        onClick={() => {name.length === 0 ? alert("Enter a Name!") : saveCategory()}}
+                        onClick={saveEdit}
                     >
                         Save
                     </button>
-                    <button onClick={() => name.length === 0 ? alert("Enter a Name!") : setEdit(false)}>Cancel</button>
-                    <button className="del-btn" onClick={() => {onDelete(tasksCategorie.id); setEdit(false)}}>Delete</button>
+                    <button onClick={cancelEdit}>Cancel</button>
                 </div>
             </div>
         )
@@ -137,23 +131,51 @@ const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
 
     function handleKeyDown(e) {
         if (e.code==="Enter") {
-            onEdit(tasksCategorie.id, name); 
-            setEdit(false);
+            onEdit({...tasksCategorie, name}); 
+            setIsEdit(false);
         }
         else if (e.code==="Escape") {
-            setEdit(false);
+            setIsEdit(false);
         }
     }
 
-    function saveCategory() {
-        onEdit(tasksCategorie.id, name); 
-        setEdit(false);
+    function saveEdit() {
+        if (name.length === 0) {
+            alert("Enter a Name!");
+        } else {
+            onEdit({...tasksCategorie, name}); 
+            setIsEdit(false);
+        }
+    }
+
+    function cancelEdit() {
+        if (name.length === 0) {
+            alert("Enter a Name!");
+        } else {
+            setIsEdit(false);
+            setName(nameBackup.current);
+        }
     }
 
 
 
     
     // Sortable
+
+    function handleDragStart(event) {            
+        setActiveId(event.active.id);  
+    }
+
+    function handleDragEnd(event) {
+        const {active, over} = event;
+    
+        if (active.id !== over.id) {
+            const oldIndex = tasks.findIndex(x => x.id === active.id);
+            const newIndex = tasks.findIndex(x => x.id === over.id);
+            setTasks(arrayMove(tasks, oldIndex, newIndex));
+        }
+        setActiveId(null);
+    }
 
     const drawTasks = () => {
         return  (
@@ -177,40 +199,39 @@ const Tasks = ({tasksCategorie, onDelete, onEdit, categoryAdded}) => {
                     />
                 ))}
             </SortableContext>
-            <DragOverlay> {activeId ? <Task taskData={tasks.find(task => task.id === activeId)}/> : null} </DragOverlay>
+            <DragOverlay style={{background: "inherit"}}> {activeId ? <Task taskData={tasks.find(task => task.id === activeId)}/> : null} </DragOverlay>
         </DndContext>
       );
     }
 
-    function handleDragStart(event) {            
-        setActiveId(event.active.id);  
-    }
-
-    function handleDragEnd(event) {
-        const {active, over} = event;
-    
-        if (active.id !== over.id) {
-            const oldIndex = tasks.findIndex(x => x.id === active.id);
-            const newIndex = tasks.findIndex(x => x.id === over.id);
-            setTasks(arrayMove(tasks, oldIndex, newIndex));
-        }
-        setActiveId(null);
-    }
-
     return (
-        <div className="test" style={{...style}} ref={setNodeRef}>
-            <div className="categoryWrapper">
+        <div 
+            ref={setNodeRef}
+            style={{...style}} 
+        >
+            <div className={"categoryWrapper"} style={{background: `var(--${tasksCategorie.color})`}}>
                 <GrDrag className="dragHandle" {...listeners} {...attributes} tabIndex="false"></GrDrag>
-                {!edit ? (
-                    <h2 className="categoryTitle" onClick={() => setEdit(true)}>
+                <div className={"editCategory-container"}>
+                    <HiColorSwatch 
+                        className="colorPicker-btn" 
+                        onClick={() => setisColorPicker(!isColorPicker)} 
+                        tabIndex="0"
+                    />
+                    {isColorPicker && <ColorPicker tasksCategorie={tasksCategorie} onEdit={onEdit} onClose={setisColorPicker}/>}
+                    <FaTimes className="del-icon" onClick={() => {onDelete(tasksCategorie.id); setIsEdit(false)}} />
+                </div>
+                {!isEdit ? (
+                    <h2 className="categoryTitle" onClick={() => {setIsEdit(true); nameBackup.current = name}}>
                         {tasksCategorie.name}
                     </h2>
                 ) : drawCategoryEdit()}
                 <div className="tasks" >{(tasks.length > 0) ? drawTasks() : <p>Tasks</p>}</div>
-                <Add onAdd={addTask}/>
+                <AddTask onAdd={addTask}/>
             </div>
         </div>
     )
 }
 
-export default Tasks
+
+
+export default TasksCategorie

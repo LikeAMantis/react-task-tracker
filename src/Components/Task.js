@@ -20,7 +20,7 @@ const Task = forwardRef(({taskData, onDelete, onEdit, attributes, listeners, sty
                 className="checkbox" 
                 onClick={() => onEdit({...taskData, done: !taskData.done})} 
             >
-                { taskData.done && <BsCheck/>}
+                { taskData.done && <BsCheck style={{color: "red"}}/>}
             </div>
             <input 
                 className="task" 
