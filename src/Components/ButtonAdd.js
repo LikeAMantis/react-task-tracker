@@ -2,7 +2,7 @@ import { useState } from "react";
 import { TiPlus } from "react-icons/ti"
 
 
-const AddTask = ({ onAdd }) => {
+const ButtonAdd = ({ onAdd, text, style }) => {
     const [value, setValue] = useState("");
     const [isEdit, setIsEdit] = useState(false);
 
@@ -14,13 +14,13 @@ const AddTask = ({ onAdd }) => {
 
     function drawEdit() {
         return(
-            <div>
+            <div className="edit">
                 <input 
                     ref={input => input && input.focus()} 
                     onKeyDown={(e) => handleKeyDown(e)} 
                     onChange={(e) => {setValue(e.target.value)}} 
                     value={value}
-                    placeholder="Add Task"
+                    placeholder={text}
                 ></input>
                 <div>
                     <button className="save-btn" onClick={onClick}>Save</button>
@@ -30,10 +30,10 @@ const AddTask = ({ onAdd }) => {
         )
     }
 
-    function drawAddTask() {
+    function drawButton() {
         return ( 
-            <div id="addTask" onClick={() => setIsEdit(true)}>
-                <TiPlus /><span>Add Task</span>
+            <div className="add-btn" style={style} >
+                <span onClick={() => setIsEdit(true)}><TiPlus />{text}</span>
             </div>
         )
     }
@@ -49,8 +49,8 @@ const AddTask = ({ onAdd }) => {
     }
 
     return (
-        <>{!isEdit ? drawAddTask() : drawEdit() }</>
+        <>{!isEdit ? drawButton() : drawEdit() }</>
     )
 }
 
-export default AddTask
+export default ButtonAdd

@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
 import { AiOutlineLoading3Quarters } from "react-icons/ai"
 import TaskCategoriesContainer from "./Components/TaskCategoriesContainer";
+import SideBar from "./Components/SideBar";
 
 const App = () => {
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
+    const [filterState, setFilterState] = useState({type: "all"})
 
     useEffect(() => {
         const getData = async() => {
             const dataFromServer = await fetchData(); 
-            setData(dataFromServer)
+            setData(dataFromServer);
         }
         getData();
     }, []);
@@ -21,8 +23,11 @@ const App = () => {
 
     return (
         <div className="App">
-            <h1>Tasks Tracker</h1>
-            {Object.keys(data).length > 0 ? <TaskCategoriesContainer data={data} /> : <AiOutlineLoading3Quarters id="loading-icon"/>}
+            {Object.keys(data).length > 0 && <SideBar data={data} setData={setData} setFilterState={setFilterState} filterState={filterState} />}
+            <div style={{width: "100%"}}>
+                <h1>Tasks Tracker</h1>
+                {Object.keys(data).length > 0 ? <TaskCategoriesContainer data={data} filterState={filterState} /> : <AiOutlineLoading3Quarters id="loading-icon"/>}
+            </div>
         </div>
     );
 }

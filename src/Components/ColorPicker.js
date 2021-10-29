@@ -1,29 +1,28 @@
 import React from 'react'
+import reactDom from 'react-dom';
 
-const ColorPicker = ({tasksCategorie, onEdit, onClose}) => {
+const ColorPicker = ({tasksCategorie, onEdit, onClose, wrapper, colors}) => {
     function handleEdit(e) {
         e.stopPropagation();
         if (!e.target.hasAttribute("title")) return;
-        onEdit({...tasksCategorie, color: e.target.title});
+        
+        onEdit({...tasksCategorie, color: parseInt(e.target.dataset.id)});
         onClose(false);
     }
 
-    return (
+    return reactDom.createPortal((
         <div className="colorPicker" 
+            style={{left: (wrapper.getBoundingClientRect().left + "px"), top: wrapper.getBoundingClientRect().top + 20 + "px"}}
             ref={element => element && element.focus()} 
             tabIndex="0" 
             onClick={(e) => handleEdit(e)}
             onBlur={() => onClose(false)}
         >
-            <div title="grey" style={{background: "var(--grey)"}}></div>
-            <div title="blue" style={{background: "var(--blue)"}}></div>
-            <div title="red" style={{background: "var(--red)"}}></div>
-            <div title="orange" style={{background: "var(--orange)"}}></div>
-            <div title="purple" style={{background: "var(--purple)"}}></div>
-            <div title="teal" style={{background: "var(--teal)"}}></div>
-            <div title="green" style={{background: "var(--green)"}}></div>
+            {colors.map(color => (
+                <div key={`color-${color.id}`} title={color.name} data-id={color.id} style={{background: `var(--${color.name})`}}></div>
+            ))}
         </div>
-    )
+    ), document.body)
 }
 
 export default ColorPicker

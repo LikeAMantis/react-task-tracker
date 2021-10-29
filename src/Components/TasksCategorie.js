@@ -1,12 +1,14 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { GrDrag } from "react-icons/gr";
 import { HiColorSwatch } from  "react-icons/hi";
 import { FaTimes } from "react-icons/fa";
+import { MdLabel } from "react-icons/md";
 import SortableTask from './SortableTask';
 
-import AddTask from './AddTask';
+import ButtonAdd from './ButtonAdd';
 import Task from './Task';
 import ColorPicker from './ColorPicker';
+import LabelPicker from './LabelPicker';
 
 
 // Sortable
@@ -28,13 +30,15 @@ import {
   } from '@dnd-kit/sortable';
   import { CSS } from '@dnd-kit/utilities';
 
-
-const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) => {
+  
+const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, colors, labels}) => {
     const [tasks, setTasks] = useState(tasksData);
-    const [isEdit, setIsEdit] = useState(isAdded);
+    const [isEdit, setIsEdit] = useState(false);
+    const [isColorPicker, setisColorPicker] = useState(false);
+    const [isLabelPicker, setisLabelPicker] = useState(false);
     const [name, setName] = useState(tasksCategorie.name);
     const nameBackup = useRef();
-    const [isColorPicker, setisColorPicker] = useState(false);
+    const categoryWrapper = useRef();
 
     const [activeId, setActiveId] = useState(null);
     const sensors = useSensors(
@@ -57,19 +61,13 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
         transition,
     };
 
-
-
-
-
-    
-
     async function addTask(text) {
         var data = await postTask({tasksCategorieId: tasksCategorie.id, done: false, text});
         setTasks([...tasks, data]);
     }
 
     async function postTask(task) {
-        var res =  await fetch(`http://localhost:5000/tasks`, {
+        var res =  await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasks`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -79,13 +77,12 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
             ),
         });
         var data = await res.json();
-        console.log(data);
 
         return data;
     }
 
     async function putTask(task) {
-        var res =  await fetch(`http://localhost:5000/tasks/${task.id}`, {
+        var res =  await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasks/${task.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -98,7 +95,7 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
     }
 
     async function deleteTask(id) {
-        var res = await fetch(`http://localhost:5000/tasks/${id}`, {method: 'DELETE'});
+        var res = await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasks/${id}`, {method: 'DELETE'});
         if (res.status === 200) setTasks(tasks.filter(task => task.id !== id));
     }
 
@@ -157,6 +154,15 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
         }
     }
 
+    function drawLabel() {
+        const label = labels.find(label => label.id === tasksCategorie.label);
+        if (label != null) {
+            return <span>{label.name}</span>;
+        } else {
+            return <MdLabel className="label-btn" />;
+        }
+    }
+
 
 
     
@@ -199,7 +205,7 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
                     />
                 ))}
             </SortableContext>
-            <DragOverlay style={{background: "inherit"}}> {activeId ? <Task taskData={tasks.find(task => task.id === activeId)}/> : null} </DragOverlay>
+            <DragOverlay style={{background: "inherit"}}>{activeId ? <Task taskData={tasks.find(task => task.id === activeId)}/> : null}</DragOverlay>
         </DndContext>
       );
     }
@@ -209,15 +215,15 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
             ref={setNodeRef}
             style={{...style}} 
         >
-            <div className={"categoryWrapper"} style={{background: `var(--${tasksCategorie.color})`}}>
+            <div className={"categoryWrapper"}  style={{background: `var(--${colors.find(color => color.id === tasksCategorie.color).name})`}}>
                 <GrDrag className="dragHandle" {...listeners} {...attributes} tabIndex="false"></GrDrag>
-                <div className={"editCategory-container"}>
+                <div className={"editCategory-container"} ref={categoryWrapper}>
                     <HiColorSwatch 
                         className="colorPicker-btn" 
-                        onClick={() => setisColorPicker(!isColorPicker)} 
+                        onClick={() => setisColorPicker(true)} 
                         tabIndex="0"
                     />
-                    {isColorPicker && <ColorPicker tasksCategorie={tasksCategorie} onEdit={onEdit} onClose={setisColorPicker}/>}
+                    {isColorPicker && <ColorPicker tasksCategorie={tasksCategorie} onEdit={onEdit} onClose={setisColorPicker} wrapper={categoryWrapper.current} colors={colors} />}
                     <FaTimes className="del-icon" onClick={() => {onDelete(tasksCategorie.id); setIsEdit(false)}} />
                 </div>
                 {!isEdit ? (
@@ -226,12 +232,17 @@ const TasksCategorie = ({tasksCategorie, tasksData, onDelete, onEdit, isAdded}) 
                     </h2>
                 ) : drawCategoryEdit()}
                 <div className="tasks" >{(tasks.length > 0) ? drawTasks() : <p>Tasks</p>}</div>
-                <AddTask onAdd={addTask}/>
+                <div className="label" onClick={() => setisLabelPicker(true)}>
+                    {isLabelPicker ? (
+                        <LabelPicker tasksCategorie={tasksCategorie} onEdit={onEdit} onClose={setisLabelPicker} labels={labels} />
+                    ) : (
+                        drawLabel()
+                    )}
+                </div>
+                <ButtonAdd onAdd={addTask} text="Add Task"/>
             </div>
         </div>
     )
 }
-
-
 
 export default TasksCategorie

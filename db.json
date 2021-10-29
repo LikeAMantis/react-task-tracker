@@ -1,113 +1,142 @@
 {
-  "tasksCategories": [
+  "labels": [
     {
-      "name": "Hello",
-      "color": "purple",
+      "name": "work",
+      "id": 1
+    },
+    {
+      "name": "private",
+      "id": 2
+    }
+  ],
+  "colors": [
+    {
+      "name": "grey",
+      "id": 1
+    },
+    {
+      "name": "blue",
       "id": 2
     },
     {
-      "name": "Red",
-      "color": "red",
+      "name": "red",
       "id": 3
     },
     {
-      "name": "Blue",
-      "color": "blue",
+      "name": "green",
       "id": 4
     },
     {
-      "name": "Yellow",
-      "color": "orange",
+      "name": "orange",
       "id": 5
     },
     {
-      "name": "Purple blas",
-      "color": "blue",
+      "name": "purple",
       "id": 6
     },
     {
-      "name": "Teal",
-      "color": "teal",
+      "name": "teal",
       "id": 7
+    }
+  ],
+  "tasksCategories": [
+    {
+      "name": "Shopping List",
+      "color": 2,
+      "label": 2,
+      "id": 2
     },
     {
-      "name": "Grey dfg",
-      "color": "grey",
-      "id": 8
+      "name": "Project",
+      "color": 3,
+      "label": 1,
+      "id": 3
+    },
+    {
+      "name": "Home",
+      "color": 5,
+      "label": 2,
+      "id": 6
+    },
+    {
+      "name": "School",
+      "color": 1,
+      "label": false,
+      "id": 7
     }
   ],
   "tasks": [
     {
       "tasksCategorieId": 2,
-      "done": true,
-      "text": "Test",
+      "done": false,
+      "text": "Bananas",
       "id": 1
     },
     {
       "tasksCategorieId": 2,
-      "done": true,
-      "text": "sDF",
+      "done": false,
+      "text": "Apples",
       "id": 2
     },
     {
       "tasksCategorieId": 2,
-      "done": true,
-      "text": "sTsdfvfs",
+      "done": false,
+      "text": "Pizza",
       "id": 3
     },
     {
-      "tasksCategorieId": 5,
+      "tasksCategorieId": 2,
       "done": true,
-      "text": "-est vory Et Plok cak schengos in Greek trenzur IdfoBraid, tgu deserunt pheeir wankeing dagarm sdf lkidad. dereud naar gosi trenz et",
+      "text": "Cheese",
       "id": 4
-    },
-    {
-      "tasksCategorieId": 4,
-      "done": true,
-      "text": "dfg",
-      "id": 5
-    },
-    {
-      "tasksCategorieId": 3,
-      "done": true,
-      "text": "dfg",
-      "id": 6
     },
     {
       "tasksCategorieId": 6,
       "done": true,
-      "text": "dfg",
-      "id": 7
-    },
-    {
-      "tasksCategorieId": 8,
-      "done": true,
-      "text": "dfg",
-      "id": 9
+      "text": "Water plants",
+      "id": 5
     },
     {
       "tasksCategorieId": 7,
-      "done": true,
-      "text": "dfg",
+      "done": false,
+      "text": "Learn Math",
+      "id": 6
+    },
+    {
+      "tasksCategorieId": 7,
+      "done": false,
+      "text": "Finish Homework",
+      "id": 7
+    },
+    {
+      "tasksCategorieId": 7,
+      "done": false,
+      "text": "meet with jessica to study",
+      "id": 8
+    },
+    {
+      "tasksCategorieId": 6,
+      "done": false,
+      "text": "Clean up garage",
+      "id": 9
+    },
+    {
+      "tasksCategorieId": 6,
+      "done": false,
+      "text": "vaccum bedroom",
       "id": 10
     },
     {
-      "tasksCategorieId": 4,
-      "done": true,
-      "text": "Test",
-      "id": 12
+      "tasksCategorieId": 3,
+      "done": false,
+      "text": "Finish drawings",
+      "id": 11
     },
     {
-      "tasksCategorieId": 5,
-      "done": true,
-      "text": "test sdlkf jlsdöfj sdjf lösdjflssdf",
+      "tasksCategorieId": 3,
+      "done": false,
+      "text": "email john",
       "id": 13
-    },
-    {
-      "tasksCategorieId": 4,
-      "done": true,
-      "text": "Test",
-      "id": 14
     }
   ]
 }

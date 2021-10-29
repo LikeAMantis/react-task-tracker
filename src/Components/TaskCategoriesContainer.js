@@ -1,6 +1,6 @@
-import TasksCategorie from './TasksCategorie';
 import { useState } from 'react';
 import { IoAddCircleOutline } from 'react-icons/io5';
+import TasksCategorie from './TasksCategorie';
 
 import {
     DndContext, 
@@ -18,9 +18,8 @@ import {
 } from '@dnd-kit/sortable';
 
 
-const TaskCategoriesContainer = ({ data }) => {
+const TaskCategoriesContainer = ({ data, filterState }) => {
   const [tasksCategories, setTasksCategories] = useState(data.tasksCategories);
-  const [categoryAdded, setCategoryAdded] = useState(false);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -30,15 +29,18 @@ const TaskCategoriesContainer = ({ data }) => {
   );
 
 
-
-
   async function addCategory() {
-    var res =  await fetch(`http://localhost:5000/tasksCategories`, {
+    const newCategorie = {name: "New", color: 1, label: false};
+    if (filterState.type !== "all") {
+      newCategorie[filterState.type] = filterState.value;
+    }
+
+    var res =  await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasksCategories`, {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json'
         },
-      body: JSON.stringify({name: "", color: "grey"}),
+      body: JSON.stringify(newCategorie),
     });
     var data = await res.json();
 
@@ -46,12 +48,12 @@ const TaskCategoriesContainer = ({ data }) => {
   }
 
   async function deleteCategory(id) {
-      var res = await fetch(`http://localhost:5000/tasksCategories/${id}`, {method: 'DELETE'});
+      var res = await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasksCategories/${id}`, {method: 'DELETE'});
       if (res.status === 200) setTasksCategories(tasksCategories.filter(categorie => categorie.id !== id));
   }
 
   async function editCategory(editCategory) {
-    var res =  await fetch(`http://localhost:5000/tasksCategories/${editCategory.id}`, {
+    var res =  await fetch(`https://my-json-server.typicode.com/LikeAMantis/react-task-tracker/tasksCategories/${editCategory.id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -59,7 +61,6 @@ const TaskCategoriesContainer = ({ data }) => {
         body: JSON.stringify(editCategory),
     });
     var data = await res.json();
-    console.log(data);
 
     setTasksCategories(tasksCategories.map(categorie => categorie.id === editCategory.id ? data : categorie));
   }
@@ -87,36 +88,36 @@ const TaskCategoriesContainer = ({ data }) => {
             collisionDetection={closestCenter}
             onDragEnd={handleDragEnd}
         >
-            <SortableContext 
-                items={tasksCategories}
-            > 
-                { tasksCategories.map((tasksCategorie) => (
-                    <TasksCategorie 
-                        key={`Categorie-${tasksCategorie.id}`} 
-                        tasksCategorie={tasksCategorie}
-                        tasksData={data.tasks.filter((task) => task.tasksCategorieId === tasksCategorie.id)} 
-                        onDelete={deleteCategory}
-                        onEdit={editCategory} 
-                        isAdded={categoryAdded}
-                    />
-                ))}
-            </SortableContext>
+          <SortableContext items={tasksCategories} >
+            {tasksCategories.filter(categorie => categorie[filterState.type] === filterState.value).map((tasksCategorie) => (
+              <TasksCategorie 
+                  key={`Categorie-${tasksCategorie.id}`} 
+                  tasksCategorie={tasksCategorie}
+                  tasksData={data.tasks.filter((task) => task.tasksCategorieId === tasksCategorie.id)} 
+                  onDelete={deleteCategory}
+                  onEdit={editCategory} 
+                  colors={data.colors}
+                  labels={data.labels}
+              />))}
+          </SortableContext>
       </DndContext>
     </>
     )
   }
 
   return (
+    <>
     <div className="TaskCategoriesContainer">
         <div className="flexContainer">
             {tasksCategories.length > 0 ? drawTasksCategories() : "No Categories added yet!"}
         </div>
         <hr size="1" width="90%" color="black"></hr>
-        <div id="addCategory" onClick={() => {addCategory(); setCategoryAdded(true)}}>
+        <div id="addCategory" onClick={addCategory}>
             <IoAddCircleOutline />
             <span>Add Category</span> 
         </div>
     </div>
+    </>
   );
 }
 

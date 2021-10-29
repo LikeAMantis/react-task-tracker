@@ -33,7 +33,7 @@ const Task = forwardRef(({taskData, onDelete, onEdit, attributes, listeners, sty
             </input>
             <FaTimes 
                 className="del-icon" 
-                onClick={(e) => {e.stopPropagation(); onDelete(taskData.id); console.log("deleteTask");}}
+                onClick={(e) => {e.stopPropagation(); onDelete(taskData.id)}}
             />
         </div>
     )
